@@ -30,6 +30,41 @@ class UserSeeder extends Seeder
                     'password' => Hash::make('12345678'),
                     'role_id' => 2,
                     'created_at' => now(),
+                ],
+                [
+                    'name' => 'Joko',
+                    'email' => 'joko@gmail.com',
+                    'password' => Hash::make('12345678'),
+                    'role_id' => 3,
+                    'created_at' => now(),
+                ],
+                [
+                    'name' => 'Siti',
+                    'email' => 'siti@gmail.com',
+                    'password' => Hash::make('12345678'),
+                    'role_id' => 3,
+                    'created_at' => now(),
+                ],
+                [
+                    'name' => 'Putri',
+                    'email' => 'putri@gmail.com',
+                    'password' => Hash::make('12345678'),
+                    'role_id' => 3,
+                    'created_at' => now(),
+                ],
+                [
+                    'name' => 'Risky',
+                    'email' => 'risky@gmail.com',
+                    'password' => Hash::make('12345678'),
+                    'role_id' => 3,
+                    'created_at' => now(),
+                ],
+                [
+                    'name' => 'Dinda',
+                    'email' => 'dinda@gmail.com',
+                    'password' => Hash::make('12345678'),
+                    'role_id' => 3,
+                    'created_at' => now(),
                 ]
             ]
         );

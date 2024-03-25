@@ -18,7 +18,9 @@ class DatabaseSeeder extends Seeder
             ProblemSeeder::class,
             FactorySeeder::class,
             ScaleSeeder::class,
-            AspectSeeder::class
+            AspectSeeder::class,
+            CriteriaSeeder::class,
+            DifferenceSeeder::class
         ]);
 
     }

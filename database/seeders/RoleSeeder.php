@@ -25,6 +25,11 @@ class RoleSeeder extends Seeder
                     'level' => 2,
                     'created_at' => now()
                 ],
+                [
+                    'name' => 'user',
+                    'level' => 3,
+                    'created_at' => now()
+                ],
             ]
         );
 
