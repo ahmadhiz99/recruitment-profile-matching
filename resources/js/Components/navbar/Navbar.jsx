@@ -37,8 +37,8 @@ export default function Navbar({ user }) {
                         </div>
                         <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                             <NavLink
-                                href={route("dashboard")}
-                                // active={route().current("dashboard")}
+                                href={route("problem.index")}
+                                active={route().current("problem.index")}
                             >
                                 Pekerjaan
                             </NavLink>

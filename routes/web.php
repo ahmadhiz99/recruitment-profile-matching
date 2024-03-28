@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\ProblemsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/edit/{id}', [UsersController::class, 'edit'])->name('user.edit');
     Route::put('/user/update/{id}', [UsersController::class, 'update'])->name('user.update');
     Route::delete('/user/delete/{id}', [UsersController::class, 'delete'])->name('user.delete');
+
+    // CRUD PROBLEMS
+    Route::get('/problems', [ProblemsController::class, 'index'])->name('problem.index');
+    Route::get('/problem/create', [ProblemsController::class, 'create'])->name('problem.create');
+    Route::post('/problem/store', [ProblemsController::class, 'store'])->name('problem.store');
+    Route::get('/problem/edit/{id}', [ProblemsController::class, 'edit'])->name('problem.edit');
+    Route::put('/problem/update/{id}', [ProblemsController::class, 'update'])->name('problem.update');
+    Route::delete('/problem/delete/{id}', [ProblemsController::class, 'delete'])->name('problem.delete');
 
     // CRUD PROFILE
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
