@@ -10,6 +10,8 @@ export default function Create({ auth }) {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [status, setStatus] = useState("open");
+    const [coreFactor, setCoreFactor] = useState("");
+    const [secondaryFactor, setSecondaryFactor] = useState("");
 
     const store = (e) => {
         e.preventDefault();
@@ -20,6 +22,8 @@ export default function Create({ auth }) {
                 description: description,
                 status: status,
                 created_by: auth.user.name,
+                core_factor: coreFactor,
+                secondary_factor: secondaryFactor,
             },
             preserveState: true,
             preserveScroll: true,
@@ -108,6 +112,38 @@ export default function Create({ auth }) {
                                         </option>
                                         <option value={"done"}>Selesai</option>
                                     </select>
+                                </div>
+                            </div>
+                            <div className="w-1/2 mt-3">
+                                <div className="flex flex-col gap-2">
+                                    <label className="text-sm">
+                                        Core Factor (%)
+                                    </label>
+                                    <input
+                                        className="rounded-lg border border-gray-300"
+                                        type="number"
+                                        placeholder="Misal: 60"
+                                        value={coreFactor}
+                                        onChange={(e) =>
+                                            setCoreFactor(e.target.value)
+                                        }
+                                    />
+                                </div>
+                            </div>
+                            <div className="w-1/2 mt-3">
+                                <div className="flex flex-col gap-2">
+                                    <label className="text-sm">
+                                        Secondary Factor (%)
+                                    </label>
+                                    <input
+                                        className="rounded-lg border border-gray-300"
+                                        type="number"
+                                        placeholder="Misal: 40"
+                                        value={secondaryFactor}
+                                        onChange={(e) =>
+                                            setSecondaryFactor(e.target.value)
+                                        }
+                                    />
                                 </div>
                             </div>
                             <div className="flex flex-row mt-5 gap-2">

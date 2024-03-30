@@ -103,6 +103,12 @@ export default function Problems({ auth }) {
                                         <th className="py-3 px-4 text-sm">
                                             Status
                                         </th>
+                                        <th className="py-3 px-4 text-sm">
+                                            Core Factor
+                                        </th>
+                                        <th className="py-3 px-4 text-sm">
+                                            Secondary Factor
+                                        </th>
                                         <th className="py-3 px-4 w-10 text-sm">
                                             Aksi
                                         </th>
@@ -128,6 +134,22 @@ export default function Problems({ auth }) {
                                                         <td className="py-3 px-4 border-b-2 border-gray-50 text-sm">
                                                             {problem.status}
                                                         </td>
+                                                        <td className="py-3 px-4 border-b-2 border-gray-50 text-sm">
+                                                            {
+                                                                problem
+                                                                    .factories[0]
+                                                                    .percent
+                                                            }{" "}
+                                                            %
+                                                        </td>
+                                                        <td className="py-3 px-4 border-b-2 border-gray-50 text-sm">
+                                                            {
+                                                                problem
+                                                                    .factories[1]
+                                                                    .percent
+                                                            }{" "}
+                                                            %
+                                                        </td>
                                                         <td className="py-3 px-4 border-b-2 border-gray-50">
                                                             <div className="flex items-center gap-0">
                                                                 <Link
@@ -136,7 +158,7 @@ export default function Problems({ auth }) {
                                                                         problem.id
                                                                     }
                                                                 >
-                                                                    <i className="bx bx-fw bx-info-circle text-blue-900"></i>
+                                                                    <i className="bx bx-fw bx-info-circle text-indigo-500"></i>
                                                                 </Link>
 
                                                                 <i

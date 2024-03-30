@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Problem extends Model
+class Criteria extends Model
 {
     use HasFactory;
-    protected $table = 'problems';
+    protected $table = 'criterias';
 
-    public function factories()
+    public function aspect()
     {
-        return $this->hasMany(Factory::class)->with('aspects');
+        return $this->belongsTo(Aspect::class);
     }
 }
