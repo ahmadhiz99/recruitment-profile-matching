@@ -48,7 +48,7 @@ class ProblemsController extends Controller
 
     public function edit($id)
     {
-        $problem = Problem::with('aspects')->find($id);
+        $problem = Problem::with('aspects', 'differences')->find($id);
         return Inertia::render('Problem/Edit', [
             'problem' => $problem
         ]);

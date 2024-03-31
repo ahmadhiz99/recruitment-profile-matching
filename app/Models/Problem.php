@@ -14,4 +14,9 @@ class Problem extends Model
     {
         return $this->hasMany(Aspect::class)->with('criterias');
     }
+
+    public function differences()
+    {
+        return $this->hasMany(Difference::class);
+    }
 }

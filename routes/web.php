@@ -9,6 +9,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ProblemsController;
 use App\Http\Controllers\AspectsController;
 use App\Http\Controllers\CriteriasController;
+use App\Http\Controllers\DifferencesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +62,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/criteria/store', [CriteriasController::class, 'store'])->name('criteria.store');
     Route::put('/criteria/update/{id}', [CriteriasController::class, 'update'])->name('criteria.update');
     Route::delete('/criteria/delete/{id}', [CriteriasController::class, 'delete'])->name('criteria.delete');
+
+    // CRUD DIFFERENCES
+    Route::post('/difference/store', [DifferencesController::class, 'store'])->name('difference.store');
+    Route::put('/difference/update/{id}', [DifferencesController::class, 'update'])->name('difference.update');
+    Route::delete('/difference/delete/{id}', [DifferencesController::class, 'delete'])->name('difference.delete');
 
     // CRUD PROFILE
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

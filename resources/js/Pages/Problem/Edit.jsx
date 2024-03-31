@@ -1,5 +1,6 @@
 import PrimaryButton from "@/Components/PrimaryButton";
 import PageAspects from "@/Components/tab_pages/problem/PageAspects";
+import PageDifferences from "@/Components/tab_pages/problem/PageDifferences";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, usePage, router, Link } from "@inertiajs/react";
 import { useState } from "react";
@@ -239,6 +240,12 @@ export default function Edit({ auth }) {
                     {page === "aspect" && (
                         <PageAspects
                             aspects={data.problem.aspects}
+                            problem={data.problem}
+                        />
+                    )}
+                    {page === "selisih" && (
+                        <PageDifferences
+                            differences={data.problem.differences}
                             problem={data.problem}
                         />
                     )}
