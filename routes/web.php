@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ProblemsController;
 use App\Http\Controllers\AspectsController;
+use App\Http\Controllers\CriteriasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,12 +53,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/problem/delete/{id}', [ProblemsController::class, 'delete'])->name('problem.delete');
 
     // CRUD ASPECTS
-    Route::get('/aspects', [AspectsController::class, 'index'])->name('aspect.index');
-    Route::get('/aspect/create', [AspectsController::class, 'create'])->name('aspect.create');
     Route::post('/aspect/store', [AspectsController::class, 'store'])->name('aspect.store');
-    Route::get('/aspect/edit/{id}', [AspectsController::class, 'edit'])->name('aspect.edit');
     Route::put('/aspect/update/{id}', [AspectsController::class, 'update'])->name('aspect.update');
     Route::delete('/aspect/delete/{id}', [AspectsController::class, 'delete'])->name('aspect.delete');
+
+    // CRUD CRITERIAS
+    Route::post('/criteria/store', [CriteriasController::class, 'store'])->name('criteria.store');
+    Route::put('/criteria/update/{id}', [CriteriasController::class, 'update'])->name('criteria.update');
+    Route::delete('/criteria/delete/{id}', [CriteriasController::class, 'delete'])->name('criteria.delete');
 
     // CRUD PROFILE
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

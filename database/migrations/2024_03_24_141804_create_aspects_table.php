@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('aspects', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedBigInteger('factory_id');
-            $table->foreign('factory_id')->references('id')->on('factories')->cascadeOnDelete();
+            $table->string('factor');
+            $table->unsignedBigInteger('problem_id');
+            $table->foreign('problem_id')->references('id')->on('problems')->cascadeOnDelete();
             $table->timestamps();
         });
     }

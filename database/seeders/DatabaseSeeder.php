@@ -16,7 +16,6 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             UserSeeder::class,
             ProblemSeeder::class,
-            FactorySeeder::class,
             ScaleSeeder::class,
             AspectSeeder::class,
             CriteriaSeeder::class,

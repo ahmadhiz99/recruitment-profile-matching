@@ -29,6 +29,9 @@ export default function Create({ auth }) {
             preserveScroll: true,
             onSuccess: (page) => {
                 toast.success("Berhasil tambah pekerjaan");
+                setTimeout(() => {
+                    window.location.href = route("problem.index");
+                }, 3000);
             },
         });
     };

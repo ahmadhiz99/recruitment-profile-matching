@@ -136,17 +136,13 @@ export default function Problems({ auth }) {
                                                         </td>
                                                         <td className="py-3 px-4 border-b-2 border-gray-50 text-sm">
                                                             {
-                                                                problem
-                                                                    .factories[0]
-                                                                    .percent
+                                                                problem.core_factor
                                                             }{" "}
                                                             %
                                                         </td>
                                                         <td className="py-3 px-4 border-b-2 border-gray-50 text-sm">
                                                             {
-                                                                problem
-                                                                    .factories[1]
-                                                                    .percent
+                                                                problem.secondary_factor
                                                             }{" "}
                                                             %
                                                         </td>

@@ -15,8 +15,8 @@ class Aspect extends Model
         return $this->hasMany(Criteria::class);
     }
 
-    public function factory()
+    public function problem()
     {
-        return $this->belongsTo(Factory::class);
+        return $this->belongsTo(Problem::class);
     }
 }

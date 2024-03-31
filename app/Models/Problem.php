@@ -10,8 +10,8 @@ class Problem extends Model
     use HasFactory;
     protected $table = 'problems';
 
-    public function factories()
+    public function aspects()
     {
-        return $this->hasMany(Factory::class)->with('aspects');
+        return $this->hasMany(Aspect::class)->with('criterias');
     }
 }

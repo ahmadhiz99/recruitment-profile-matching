@@ -20,6 +20,8 @@ class ProblemSeeder extends Seeder
                     'description' => 'Ini adalah proses perhitungan seleksi otomatis menggunakan sistem pendukung keputusan dengan metode profile matching',
                     'created_by' => 'Super Admin',
                     'status' => 'open',
+                    'core_factor' => 60,
+                    'secondary_factor' => 40,
                     'created_at' => now()
                 ],
                 [
@@ -27,6 +29,8 @@ class ProblemSeeder extends Seeder
                     'description' => 'Ini adalah proses perhitungan seleksi otomatis menggunakan sistem pendukung keputusan dengan metode profile matching',
                     'created_by' => 'Akbar Staff',
                     'status' => 'pending',
+                    'core_factor' => 60,
+                    'secondary_factor' => 40,
                     'created_at' => now()
                 ],
             ]

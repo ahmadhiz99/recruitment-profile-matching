@@ -17,12 +17,14 @@ class AspectSeeder extends Seeder
             [
                 [
                     'name' => 'Kecerdasan',
-                    'factory_id' => 1,
+                    'factor' => 'CF',
+                    'problem_id' => 1,
                     'created_at' => now()
                 ],
                 [
                     'name' => 'Target Kerja',
-                    'factory_id' => 2,
+                    'factor' => 'SF',
+                    'problem_id' => 1,
                     'created_at' => now()
                 ],
             ]
