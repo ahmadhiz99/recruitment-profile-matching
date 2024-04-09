@@ -18,6 +18,7 @@ class CriteriaSeeder extends Seeder
                 [
                     'criteria' => 'Penguasaan Pemasaran',
                     'code' => 'A1',
+                    'factor' => 'CF',
                     'value' => 3,
                     'aspect_id' => 1,
                     'created_at' => now()
@@ -25,6 +26,7 @@ class CriteriaSeeder extends Seeder
                 [
                     'criteria' => 'Penguasaan Area',
                     'code' => 'A2',
+                    'factor' => 'CF',
                     'value' => 4,
                     'aspect_id' => 1,
                     'created_at' => now()
@@ -32,6 +34,7 @@ class CriteriaSeeder extends Seeder
                 [
                     'criteria' => 'Kreatif',
                     'code' => 'A3',
+                    'factor' => 'CF',
                     'value' => 3,
                     'aspect_id' => 1,
                     'created_at' => now()
@@ -39,6 +42,7 @@ class CriteriaSeeder extends Seeder
                 [
                     'criteria' => 'Komitmen',
                     'code' => 'A4',
+                    'factor' => 'SF',
                     'value' => 4,
                     'aspect_id' => 1,
                     'created_at' => now()
@@ -46,6 +50,7 @@ class CriteriaSeeder extends Seeder
                 [
                     'criteria' => 'Inovatif',
                     'code' => 'A5',
+                    'factor' => 'SF',
                     'value' => 3,
                     'aspect_id' => 1,
                     'created_at' => now()
@@ -53,6 +58,7 @@ class CriteriaSeeder extends Seeder
                 [
                     'criteria' => 'Jujur',
                     'code' => 'A6',
+                    'factor' => 'CF',
                     'value' => 3,
                     'aspect_id' => 2,
                     'created_at' => now()
@@ -60,6 +66,7 @@ class CriteriaSeeder extends Seeder
                 [
                     'criteria' => 'Bertanggung Jawab',
                     'code' => 'A7',
+                    'factor' => 'CF',
                     'value' => 2,
                     'aspect_id' => 2,
                     'created_at' => now()
@@ -67,6 +74,7 @@ class CriteriaSeeder extends Seeder
                 [
                     'criteria' => 'Disiplin',
                     'code' => 'A8',
+                    'factor' => 'CF',
                     'value' => 4,
                     'aspect_id' => 2,
                     'created_at' => now()
@@ -74,6 +82,7 @@ class CriteriaSeeder extends Seeder
                 [
                     'criteria' => 'Bekerjasama Tim',
                     'code' => 'A9',
+                    'factor' => 'SF',
                     'value' => 3,
                     'aspect_id' => 2,
                     'created_at' => now()
@@ -81,6 +90,7 @@ class CriteriaSeeder extends Seeder
                 [
                     'criteria' => 'Percaya Diri',
                     'code' => 'A10',
+                    'factor' => 'SF',
                     'value' => 3,
                     'aspect_id' => 2,
                     'created_at' => now()

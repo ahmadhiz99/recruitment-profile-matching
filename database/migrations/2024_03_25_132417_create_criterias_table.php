@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('criteria');
             $table->string('code');
+            $table->string('factor');
             $table->integer('value');
             $table->unsignedBigInteger('aspect_id');
             $table->foreign('aspect_id')->references('id')->on('aspects')->cascadeOnDelete();
