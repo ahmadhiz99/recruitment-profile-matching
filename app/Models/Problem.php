@@ -19,4 +19,9 @@ class Problem extends Model
     {
         return $this->hasMany(Difference::class);
     }
+
+    public function participants()
+    {
+        return $this->hasMany(Participant::class)->with('user', 'problem');
+    }
 }

@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             ScaleSeeder::class,
             AspectSeeder::class,
             CriteriaSeeder::class,
-            DifferenceSeeder::class
+            DifferenceSeeder::class,
+            ParticipantSeeder::class
         ]);
 
     }
