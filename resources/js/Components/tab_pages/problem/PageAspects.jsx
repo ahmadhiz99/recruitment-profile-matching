@@ -11,6 +11,7 @@ export default function PageAspects({ aspects, problem }) {
     const [factor, setFactor] = useState("");
     const [index, setIndex] = useState("");
     const [showModal, setShowModal] = useState(false);
+    const [showModalAspect, setShowModalAspect] = useState(false);
 
     const [criteria, setCriteria] = useState();
     const [criteriaName, setCriteriaName] = useState("");
@@ -25,13 +26,13 @@ export default function PageAspects({ aspects, problem }) {
             method: "post",
             data: {
                 name: aspectName,
-                factor: factor,
                 problem_id: problem.id,
             },
             preserveState: true,
             preserveScroll: true,
             onSuccess: (page) => {
                 toast.success("Berhasil tambah aspek");
+                resetState();
             },
         });
     };
@@ -42,7 +43,6 @@ export default function PageAspects({ aspects, problem }) {
             method: "put",
             data: {
                 name: aspectName,
-                factor: aspect.factor,
                 problem_id: problem.id,
             },
             preserveState: true,
@@ -50,6 +50,7 @@ export default function PageAspects({ aspects, problem }) {
             onSuccess: (page) => {
                 toast.success("Berhasil ubah aspek");
                 resetEditMode();
+                resetState();
             },
         });
     };
@@ -63,24 +64,7 @@ export default function PageAspects({ aspects, problem }) {
             preserveScroll: true,
             onSuccess: (page) => {
                 toast.success("Berhasil hapus aspek");
-            },
-        });
-    };
-
-    const changeFactor = (e, aspect, factorAspect) => {
-        e.preventDefault();
-        router.visit(`/aspect/update/${aspect.id}`, {
-            method: "put",
-            data: {
-                name: aspect.name,
-                factor: factorAspect,
-                problem_id: problem.id,
-            },
-            preserveState: true,
-            preserveScroll: true,
-            onSuccess: (page) => {
-                toast.success("Berhasil ubah faktor ke " + factorAspect);
-                resetEditMode();
+                resetState();
             },
         });
     };
@@ -92,6 +76,7 @@ export default function PageAspects({ aspects, problem }) {
             data: {
                 criteria: criteriaName,
                 code: criteriaCode,
+                factor: factor,
                 value: criteriaValue,
                 aspect_id: aspect.id,
             },
@@ -111,6 +96,7 @@ export default function PageAspects({ aspects, problem }) {
             data: {
                 criteria: criteriaName,
                 code: criteriaCode,
+                factor: factor,
                 value: criteriaValue,
                 aspect_id: aspect.id,
             },
@@ -156,6 +142,7 @@ export default function PageAspects({ aspects, problem }) {
         if (criteria) {
             setCriteria(criteria);
             setCriteriaName(criteria.criteria);
+            setFactor(criteria.factor);
             setCriteriaCode(criteria.code);
             setCriteriaValue(criteria.value);
             setEditModeCriteria(true);
@@ -165,6 +152,7 @@ export default function PageAspects({ aspects, problem }) {
     const resetState = () => {
         resetEditMode();
         setShowModal(false);
+        setShowModalAspect(false);
         setAspect({});
         setCriteria();
         setCriteriaName("");
@@ -175,9 +163,14 @@ export default function PageAspects({ aspects, problem }) {
     return (
         <div className=" bg-white overflow-hidden shadow-sm sm:rounded-lg h-fit">
             <div className="p-6 w-full">
-                <p className="text-xl font-bold mb-3">Aspek Penilaian</p>
+                <div className="flex flex-row justify-between items-center mb-3">
+                    <p className="text-xl font-bold mb-3">Aspek Penilaian</p>
+                    <PrimaryButton onClick={() => setShowModalAspect(true)}>
+                        Tambah Baru
+                    </PrimaryButton>
+                </div>
                 <hr />
-                <div className="flex flex-row items-center gap-2 mt-4 mb-4">
+                {/* <div className="flex flex-row items-center gap-2 mt-4 mb-4">
                     <input
                         className="rounded-lg border border-gray-300 w-full"
                         type="text"
@@ -199,9 +192,9 @@ export default function PageAspects({ aspects, problem }) {
                     <PrimaryButton onClick={(e) => storeAspect(e)}>
                         Tambah
                     </PrimaryButton>
-                </div>
+                </div> */}
 
-                <div className="grid grid-cols-12 gap-2 mb-4">
+                <div className="grid grid-cols-12 gap-2 mb-4 mt-4">
                     {aspects.length > 0
                         ? aspects.map((asp, idx) => {
                               return (
@@ -222,7 +215,7 @@ export default function PageAspects({ aspects, problem }) {
                                                       )
                                                   }
                                               />
-                                              <div className="flex flex-row items-center gap-4">
+                                              <div className="flex flex-row items-center gap-2">
                                                   <PrimaryButton
                                                       className="bg-rose-500"
                                                       onClick={() =>
@@ -244,37 +237,9 @@ export default function PageAspects({ aspects, problem }) {
                                       ) : (
                                           <div className="flex flex-row justify-between items-center bg-slate-100 p-3">
                                               <p className="text-lg font-bold">
-                                                  Aspek : {asp.name} (
-                                                  {asp.factor})
+                                                  Aspek : {asp.name}
                                               </p>
                                               <div className="flex flex-row items-center gap-4">
-                                                  {asp.factor === "CF" ? (
-                                                      <p
-                                                          onClick={(e) =>
-                                                              changeFactor(
-                                                                  e,
-                                                                  asp,
-                                                                  "SF"
-                                                              )
-                                                          }
-                                                          className="text-sm text-blue-900"
-                                                      >
-                                                          Set Secondary
-                                                      </p>
-                                                  ) : (
-                                                      <p
-                                                          onClick={(e) =>
-                                                              changeFactor(
-                                                                  e,
-                                                                  asp,
-                                                                  "CF"
-                                                              )
-                                                          }
-                                                          className="text-sm text-blue-900"
-                                                      >
-                                                          Set Core
-                                                      </p>
-                                                  )}
                                                   <p
                                                       className="text-sm text-orange-500"
                                                       onClick={() =>
@@ -389,6 +354,25 @@ export default function PageAspects({ aspects, problem }) {
                                     }
                                 />
                             </div>
+
+                            <div className="flex flex-col gap-2">
+                                <label className="text-sm">Tipe Faktor</label>
+                                <select
+                                    onChange={(e) => setFactor(e.target.value)}
+                                    defaultValue={0}
+                                    value={factor}
+                                    className="rounded-lg border border-gray-300 w-full"
+                                >
+                                    <option value={0} disabled>
+                                        Pilih tipe factor
+                                    </option>
+                                    <option value={"CF"}>Core Factor</option>
+                                    <option value={"SF"}>
+                                        Secondary Factor
+                                    </option>
+                                </select>
+                            </div>
+
                             <div className="flex flex-col gap-2">
                                 <label className="text-sm">Nilai</label>
                                 <input
@@ -411,6 +395,43 @@ export default function PageAspects({ aspects, problem }) {
                                             ? putCriteria(e, criteria)
                                             : storeCriteria(e)
                                     }
+                                    className="bg-indigo-500"
+                                >
+                                    Simpan
+                                </PrimaryButton>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Modal>
+            <Modal
+                show={showModalAspect}
+                onClose={() => resetState()}
+                maxWidth="md"
+            >
+                <div className="p-6">
+                    <p className="font-semibold text-lg">Tambah Aspek Baru</p>
+                    <div className="mt-3">
+                        <div className="flex flex-col gap-3">
+                            <div className="flex flex-col gap-2">
+                                <label className="text-sm">Nama Aspek</label>
+                                <input
+                                    className="rounded-lg border border-gray-300 w-full"
+                                    type="text"
+                                    placeholder="Masukkan nama aspek"
+                                    value={aspectName}
+                                    onChange={(e) =>
+                                        setAspectName(e.target.value)
+                                    }
+                                />
+                            </div>
+
+                            <div className="flex flex-row justify-end items-center gap-2">
+                                <PrimaryButton onClick={() => resetState()}>
+                                    Batal
+                                </PrimaryButton>
+                                <PrimaryButton
+                                    onClick={(e) => storeAspect(e)}
                                     className="bg-indigo-500"
                                 >
                                     Simpan

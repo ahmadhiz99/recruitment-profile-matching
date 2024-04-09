@@ -13,6 +13,7 @@ class CriteriasController extends Controller
 
         $criteria->criteria = $request->criteria;
         $criteria->code = $request->code;
+        $criteria->factor = $request->factor;
         $criteria->value = $request->value;
         $criteria->aspect_id = $request->aspect_id;
 
@@ -25,6 +26,7 @@ class CriteriasController extends Controller
 
         $criteria->criteria = $request->criteria;
         $criteria->code = $request->code;
+        $criteria->factor = $request->factor;
         $criteria->value = $request->value;
         $criteria->aspect_id = $request->aspect_id;
 

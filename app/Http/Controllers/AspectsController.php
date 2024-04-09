@@ -13,7 +13,6 @@ class AspectsController extends Controller
         $aspect = new Aspect();
 
         $aspect->name = $request->name;
-        $aspect->factor = $request->factor;
         $aspect->problem_id = $request->problem_id;
 
         $aspect->save();
@@ -24,7 +23,6 @@ class AspectsController extends Controller
         $aspect = Aspect::find($id);
 
         $aspect->name = $request->name;
-        $aspect->factor = $request->factor;
         $aspect->problem_id = $request->problem_id;
 
         $aspect->save();
