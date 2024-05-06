@@ -10,6 +10,7 @@ use App\Http\Controllers\ProblemsController;
 use App\Http\Controllers\AspectsController;
 use App\Http\Controllers\CriteriasController;
 use App\Http\Controllers\DifferencesController;
+use App\Http\Controllers\ProfileMatchingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,6 +68,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/difference/store', [DifferencesController::class, 'store'])->name('difference.store');
     Route::put('/difference/update/{id}', [DifferencesController::class, 'update'])->name('difference.update');
     Route::delete('/difference/delete/{id}', [DifferencesController::class, 'delete'])->name('difference.delete');
+
+    // PROFILE MATCHING
+    Route::post('/pm/gap', [ProfileMatchingController::class, 'gap'])->name('pm.gap');
 
     // CRUD PROFILE
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             AspectSeeder::class,
             CriteriaSeeder::class,
             DifferenceSeeder::class,
-            ParticipantSeeder::class
+            ParticipantSeeder::class,
+            ParticipantCriteriaSeeder::class
         ]);
 
     }

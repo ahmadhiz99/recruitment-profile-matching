@@ -14,4 +14,9 @@ class Criteria extends Model
     {
         return $this->belongsTo(Aspect::class);
     }
+
+    public function participantCriterias()
+    {
+        return $this->hasMany(ParticipantCriteria::class);
+    }
 }

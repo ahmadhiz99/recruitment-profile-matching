@@ -19,4 +19,9 @@ class Participant extends Model
     {
         return $this->belongsTo(Problem::class);
     }
+
+    public function participantCriterias()
+    {
+        return $this->hasMany(ParticipantCriteria::class);
+    }
 }
