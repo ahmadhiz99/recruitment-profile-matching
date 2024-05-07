@@ -32,54 +32,48 @@ export default function PageParticipants({ participants, problem }) {
         });
     };
 
-    const updateSubmitData = (data) => {
-        // console.log(data);
-        router.visit(route("pm.update.participant.criteria"), {
-            method: "put",
-            data: {
-                data: data,
-            },
-            preserveState: true,
-            preserveScroll: true,
-            onSuccess: (page) => {
-                toast.success("Berhasil ubah nilai");
-                reset();
-            },
-        });
-    };
-
+    // State untuk menyimpan nilai input
     const [inputValues, setInputValues] = useState({});
     const [editInputValues, setEditInputValues] = useState({});
 
-    const handleInputChange = (criteriaId, value, note) => {
+    // Fungsi untuk menangani perubahan nilai input
+    const handleInputChange = (aspectId, criteriaId, value, note) => {
+        // Buat salinan dari state inputValues
         const updatedInputValues = { ...inputValues };
 
-        updatedInputValues[criteriaId] = {
+        // Perbarui nilai input untuk aspek dan kriteria yang sesuai
+        if (!updatedInputValues[aspectId]) {
+            updatedInputValues[aspectId] = {};
+        }
+        // Simpan nilai input sebagai objek dengan properti value, id, dan note
+        updatedInputValues[aspectId][criteriaId] = {
             value: value,
             criteria_id: criteriaId,
             participant_id: detailParticipant?.id,
             note: note,
         };
+
+        // Perbarui state inputValues
         setInputValues(updatedInputValues);
     };
 
     useEffect(() => {
         if (editData && detailParticipant?.participant_criterias) {
-            const initialEditInputValues = {}; // Menggunakan objek
+            const initialInputValues = [];
             detailParticipant.participant_criterias.forEach((item) => {
-                initialEditInputValues[item.criteria_id] = {
+                initialInputValues.push({
                     id: item.id,
                     value: item.value,
                     note: item.note,
                     criteria_id: item.criteria_id,
                     participant_id: item.participant_id,
-                };
+                });
             });
-            setEditInputValues(initialEditInputValues);
+            setEditInputValues(initialInputValues);
         }
     }, [editData, detailParticipant?.participant_criterias]);
 
-    const criterias = problem.aspects.flatMap((aspect) => aspect.criterias);
+    console.log(problem.aspects.flatMap((aspect) => aspect.criterias));
 
     return (
         <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg h-fit w-full">
@@ -174,82 +168,61 @@ export default function PageParticipants({ participants, problem }) {
                     <p className="text-xl font-bold">
                         Penilaian - {detailParticipant?.user.name}
                     </p>
-                    {criterias?.map((criteria, idx) => {
-                        const inputValue = editData
-                            ? editInputValues[criteria.id] || {
-                                  value: "",
-                                  note: "",
-                              }
-                            : inputValues[criteria.id] || {
-                                  value: "",
-                                  note: "",
-                              };
-
-                        return (
-                            <div key={idx}>
-                                <input type="hidden" value={criteria.id} />
-                                <p>{criteria.criteria}</p>
-                                <input
-                                    type="text"
-                                    value={inputValue.value}
-                                    onChange={(e) =>
-                                        editData
-                                            ? setEditInputValues({
-                                                  ...editInputValues,
-                                                  [criteria.id]: {
-                                                      ...editInputValues[
-                                                          criteria.id
-                                                      ],
-                                                      value: e.target.value,
-                                                  },
-                                              })
-                                            : setInputValues({
-                                                  ...inputValues,
-                                                  [criteria.id]: {
-                                                      ...inputValues[
-                                                          criteria.id
-                                                      ],
-                                                      value: e.target.value,
-                                                      criteria_id: criteria.id,
-                                                      participant_id:
-                                                          detailParticipant?.id,
-                                                  },
-                                              })
-                                    }
-                                />
-                                <input
-                                    type="text"
-                                    value={inputValue.note}
-                                    onChange={(e) =>
-                                        editData
-                                            ? setEditInputValues({
-                                                  ...editInputValues,
-                                                  [criteria.id]: {
-                                                      ...editInputValues[
-                                                          criteria.id
-                                                      ],
-                                                      note: e.target.value,
-                                                  },
-                                              })
-                                            : setInputValues({
-                                                  ...inputValues,
-                                                  [criteria.id]: {
-                                                      ...inputValues[
-                                                          criteria.id
-                                                      ],
-                                                      note: e.target.value,
-                                                      criteria_id: criteria.id,
-                                                      participant_id:
-                                                          detailParticipant?.id,
-                                                  },
-                                              })
-                                    }
-                                    placeholder="Catatan"
-                                />
-                            </div>
-                        );
-                    })}
-
+                    {problem.aspects.map((aspect, aspectIdx) =>
+                        aspect.criterias.map((criteria, criteriaIdx) => {
+                            // return console.log(editInputValues);
+                            return (
+                                <div key={criteria.id}>
+                                    <input
+                                        type="hidden"
+                                        name={`aspects[${aspect.id}][${criteria.id}][criteria_id]`}
+                                        value={criteria.id}
+                                    />
+                                    <p>{criteria.criteria}</p>
+                                    <input
+                                        type="text"
+                                        value={
+                                            editData
+                                                ? editInputValues[criteriaIdx]
+                                                      ?.value
+                                                : inputValues[aspect.id]?.[
+                                                      criteria.id
+                                                  ]?.value || ""
+                                        }
+                                        onChange={(e) =>
+                                            handleInputChange(
+                                                aspect.id,
+                                                criteria.id,
+                                                e.target.value
+                                            )
+                                        }
+                                    />
+                                    <input
+                                        type="text"
+                                        value={
+                                            editData
+                                                ? editInputValues[criteriaIdx]
+                                                      ?.note
+                                                : inputValues[aspect.id]?.[
+                                                      criteria.id
+                                                  ]?.note || ""
+                                        }
+                                        onChange={(e) =>
+                                            handleInputChange(
+                                                aspect.id,
+                                                criteria.id,
+                                                inputValues[aspect.id]?.[
+                                                    criteria.id
+                                                ]?.value || "",
+                                                e.target.value
+                                            )
+                                        }
+                                        placeholder="Catatan"
+                                    />
+                                </div>
+                            );
+                        })
+                    )}
                     <div className="flex flex-row items-center gap-3 mt-5">
                         <button
                             className="bg-slate-300 py-2 px-3 rounded"
@@ -259,11 +232,7 @@ export default function PageParticipants({ participants, problem }) {
                         </button>
                         <button
                             className="bg-indigo-500 py-2 px-3 text-white rounded"
-                            onClick={() =>
-                                editData
-                                    ? updateSubmitData(editInputValues)
-                                    : submitData(inputValues)
-                            }
+                            onClick={() => submitData(inputValues)}
                         >
                             <i className="bx bx-fw bx-save"></i> Submit
                         </button>

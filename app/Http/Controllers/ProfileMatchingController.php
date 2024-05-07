@@ -7,19 +7,30 @@ use App\Models\ParticipantCriteria;
 
 class ProfileMatchingController extends Controller
 {
-    public function gap(Request $request)
+    public function storeParticipantCriterias(Request $request)
     {
-        $aspects = $request->data['aspects'];
-        foreach ($aspects as $key => $aspect) {
-            $data = $aspect['criterias'];
-            foreach ($data as $key => $critria) {
-                $participantCriteria = new ParticipantCriteria();
-                $participantCriteria->participant_id = $critria['participant_id'];
-                $participantCriteria->criteria_id = $critria['criteria_id'];
-                $participantCriteria->value = $critria['value'];
-                $participantCriteria->note = $critria['note'];
-                $participantCriteria->save();
-            }
+        foreach ($request->data as $aspectId => $criteriaData) {
+            // return $criteriaData['value'];
+            $participantCriteria = new ParticipantCriteria();
+            $participantCriteria->participant_id = $criteriaData['participant_id'];
+            $participantCriteria->criteria_id = $criteriaData['criteria_id'];
+            $participantCriteria->value = $criteriaData['value'];
+            $participantCriteria->note = $criteriaData['note'];
+            $participantCriteria->save();
+        }
+        return redirect()->back();
+    }
+
+    public function updateParticipantCriteria(Request $request)
+    {
+        foreach ($request->data as $aspectId => $criteriaData) {
+            // return $criteriaData['value'];
+            $participantCriteria = ParticipantCriteria::find($criteriaData['id']);
+            $participantCriteria->participant_id = $criteriaData['participant_id'];
+            $participantCriteria->criteria_id = $criteriaData['criteria_id'];
+            $participantCriteria->value = $criteriaData['value'];
+            $participantCriteria->note = $criteriaData['note'];
+            $participantCriteria->save();
         }
         return redirect()->back();
     }

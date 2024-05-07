@@ -70,7 +70,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/difference/delete/{id}', [DifferencesController::class, 'delete'])->name('difference.delete');
 
     // PROFILE MATCHING
-    Route::post('/pm/gap', [ProfileMatchingController::class, 'gap'])->name('pm.gap');
+    Route::post('/pm/store/participant-criterias', [ProfileMatchingController::class, 'storeParticipantCriterias'])->name('pm.store.participant.criterias');
+    Route::put('/pm/update/participant-criteria', [ProfileMatchingController::class, 'updateParticipantCriteria'])->name('pm.update.participant.criteria');
 
     // CRUD PROFILE
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
