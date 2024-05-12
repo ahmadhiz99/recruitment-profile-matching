@@ -18,11 +18,13 @@ class AspectSeeder extends Seeder
                 [
                     'name' => 'Kecerdasan',
                     'problem_id' => 1,
+                    'percentage' => 75,
                     'created_at' => now()
                 ],
                 [
                     'name' => 'Target Kerja',
                     'problem_id' => 1,
+                    'percentage' => 25,
                     'created_at' => now()
                 ],
             ]

@@ -1,6 +1,7 @@
 import PrimaryButton from "@/Components/PrimaryButton";
 import PageAspects from "@/Components/tab_pages/problem/PageAspects";
 import PageDifferences from "@/Components/tab_pages/problem/PageDifferences";
+import PageFinals from "@/Components/tab_pages/problem/PageFinals";
 import PageParticipants from "@/Components/tab_pages/problem/PageParticipants";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, usePage, router, Link } from "@inertiajs/react";
@@ -19,6 +20,12 @@ export default function Edit({ auth }) {
         data.problem.secondary_factor
     );
     const [page, setPage] = useState("edit");
+
+    const filterParticipant = data.problem.participants.filter(
+        (participant) => {
+            return participant.final == null;
+        }
+    );
 
     const update = (e) => {
         e.preventDefault();
@@ -109,16 +116,18 @@ export default function Edit({ auth }) {
                         >
                             Peserta
                         </button>
-                        <button
-                            onClick={() => setPage("result")}
-                            className={`${
-                                page === "result"
-                                    ? "bg-indigo-500 text-white"
-                                    : "bg-transparent text-indigo-500 border border-indigo-500"
-                            } py-2 px-4 rounded`}
-                        >
-                            Hasil Akhir
-                        </button>
+                        {filterParticipant.length === 0 && (
+                            <button
+                                onClick={() => setPage("result")}
+                                className={`${
+                                    page === "result"
+                                        ? "bg-indigo-500 text-white"
+                                        : "bg-transparent text-indigo-500 border border-indigo-500"
+                                } py-2 px-4 rounded`}
+                            >
+                                Hasil Akhir
+                            </button>
+                        )}
                     </div>
                     {page === "edit" && (
                         <div className=" bg-white overflow-hidden shadow-sm sm:rounded-lg h-fit">
@@ -252,6 +261,12 @@ export default function Edit({ auth }) {
                     )}
                     {page === "participant" && (
                         <PageParticipants
+                            participants={data.problem.participants}
+                            problem={data.problem}
+                        />
+                    )}
+                    {page === "result" && (
+                        <PageFinals
                             participants={data.problem.participants}
                             problem={data.problem}
                         />

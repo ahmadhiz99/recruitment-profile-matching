@@ -24,4 +24,14 @@ class Participant extends Model
     {
         return $this->hasMany(ParticipantCriteria::class);
     }
+
+    public function participantFactors()
+    {
+        return $this->hasMany(ParticipantFactor::class);
+    }
+
+    public function participantTotals()
+    {
+        return $this->hasMany(ParticipantTotal::class);
+    }
 }

@@ -11,17 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('participant_criterias', function (Blueprint $table) {
+        Schema::create('participant_factors', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('participant_id');
-            $table->unsignedBigInteger('criteria_id');
-            $table->integer('value');
-            $table->integer('gap')->nullable();
-            $table->float('bobot')->nullable();
-            $table->string('note')->nullable();
-
+            $table->unsignedBigInteger('aspect_id');
             $table->foreign('participant_id')->references('id')->on('participants')->cascadeOnDelete();
-            $table->foreign('criteria_id')->references('id')->on('criterias')->cascadeOnDelete();
+            $table->foreign('aspect_id')->references('id')->on('aspects')->cascadeOnDelete();
+            $table->float('core_factor');
+            $table->float('secondary_factor');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('participant_criterias');
+        Schema::dropIfExists('participant_factors');
     }
 };

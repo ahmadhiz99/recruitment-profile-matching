@@ -70,6 +70,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/difference/delete/{id}', [DifferencesController::class, 'delete'])->name('difference.delete');
 
     // PROFILE MATCHING
+    Route::get('/pm/start', [ProfileMatchingController::class, 'start'])->name('pm.start');
     Route::post('/pm/store/participant-criterias', [ProfileMatchingController::class, 'storeParticipantCriterias'])->name('pm.store.participant.criterias');
     Route::put('/pm/update/participant-criteria', [ProfileMatchingController::class, 'updateParticipantCriteria'])->name('pm.update.participant.criteria');
 

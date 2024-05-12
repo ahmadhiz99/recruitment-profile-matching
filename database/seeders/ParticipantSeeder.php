@@ -30,16 +30,6 @@ class ParticipantSeeder extends Seeder
                     'problem_id' => 1,
                     'created_at' => now()
                 ],
-                [
-                    'user_id' => 6,
-                    'problem_id' => 1,
-                    'created_at' => now()
-                ],
-                [
-                    'user_id' => 7,
-                    'problem_id' => 1,
-                    'created_at' => now()
-                ],
             ]
         );
     }

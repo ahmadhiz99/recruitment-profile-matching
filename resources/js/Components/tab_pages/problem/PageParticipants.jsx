@@ -1,4 +1,5 @@
 import Modal from "@/Components/Modal";
+import PrimaryButton from "@/Components/PrimaryButton";
 import { router } from "@inertiajs/react";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -33,7 +34,6 @@ export default function PageParticipants({ participants, problem }) {
     };
 
     const updateSubmitData = (data) => {
-        // console.log(data);
         router.visit(route("pm.update.participant.criteria"), {
             method: "put",
             data: {
@@ -43,6 +43,22 @@ export default function PageParticipants({ participants, problem }) {
             preserveScroll: true,
             onSuccess: (page) => {
                 toast.success("Berhasil ubah nilai");
+                reset();
+            },
+        });
+    };
+
+    const startProfileMatching = (e) => {
+        e.preventDefault();
+        router.visit(route("pm.start"), {
+            method: "get",
+            data: {
+                problem_id: problem.id,
+            },
+            preserveState: true,
+            preserveScroll: true,
+            onSuccess: (page) => {
+                toast.success("Berhasil melakukan analisis!");
                 reset();
             },
         });
@@ -88,6 +104,9 @@ export default function PageParticipants({ participants, problem }) {
                     <h1 className="font-bold text-xl">
                         Total: {participants.length}
                     </h1>
+                    <PrimaryButton onClick={(e) => startProfileMatching(e)}>
+                        Analisis
+                    </PrimaryButton>
                 </div>
                 <table className="w-full">
                     <thead className="bg-gray-100 text-left">
@@ -186,66 +205,87 @@ export default function PageParticipants({ participants, problem }) {
                               };
 
                         return (
-                            <div key={idx}>
+                            <div
+                                key={idx}
+                                className="bg-slate-100 my-5 p-5 rounded-lg"
+                            >
                                 <input type="hidden" value={criteria.id} />
-                                <p>{criteria.criteria}</p>
-                                <input
-                                    type="text"
-                                    value={inputValue.value}
-                                    onChange={(e) =>
-                                        editData
-                                            ? setEditInputValues({
-                                                  ...editInputValues,
-                                                  [criteria.id]: {
-                                                      ...editInputValues[
-                                                          criteria.id
-                                                      ],
-                                                      value: e.target.value,
-                                                  },
-                                              })
-                                            : setInputValues({
-                                                  ...inputValues,
-                                                  [criteria.id]: {
-                                                      ...inputValues[
-                                                          criteria.id
-                                                      ],
-                                                      value: e.target.value,
-                                                      criteria_id: criteria.id,
-                                                      participant_id:
-                                                          detailParticipant?.id,
-                                                  },
-                                              })
-                                    }
-                                />
-                                <input
-                                    type="text"
-                                    value={inputValue.note}
-                                    onChange={(e) =>
-                                        editData
-                                            ? setEditInputValues({
-                                                  ...editInputValues,
-                                                  [criteria.id]: {
-                                                      ...editInputValues[
-                                                          criteria.id
-                                                      ],
-                                                      note: e.target.value,
-                                                  },
-                                              })
-                                            : setInputValues({
-                                                  ...inputValues,
-                                                  [criteria.id]: {
-                                                      ...inputValues[
-                                                          criteria.id
-                                                      ],
-                                                      note: e.target.value,
-                                                      criteria_id: criteria.id,
-                                                      participant_id:
-                                                          detailParticipant?.id,
-                                                  },
-                                              })
-                                    }
-                                    placeholder="Catatan"
-                                />
+                                <p className="mb-3 font-semibold">
+                                    {criteria.criteria} ({criteria.code})
+                                </p>
+                                <div className="flex flex-row items-center gap-2">
+                                    <select
+                                        className="rounded-lg border border-gray-300"
+                                        value={inputValue.value}
+                                        onChange={(e) =>
+                                            editData
+                                                ? setEditInputValues({
+                                                      ...editInputValues,
+                                                      [criteria.id]: {
+                                                          ...editInputValues[
+                                                              criteria.id
+                                                          ],
+                                                          value: e.target.value,
+                                                      },
+                                                  })
+                                                : setInputValues({
+                                                      ...inputValues,
+                                                      [criteria.id]: {
+                                                          ...inputValues[
+                                                              criteria.id
+                                                          ],
+                                                          value: e.target.value,
+                                                          criteria_id:
+                                                              criteria.id,
+                                                          participant_id:
+                                                              detailParticipant?.id,
+                                                      },
+                                                  })
+                                        }
+                                    >
+                                        <option value={5}>
+                                            Sangat Baik - 5
+                                        </option>
+                                        <option value={4}>Baik - 4</option>
+                                        <option value={3}>Cukup - 3</option>
+                                        <option value={2}>Kurang - 2</option>
+                                        <option value={1}>
+                                            Sangat Kurang - 1
+                                        </option>
+                                    </select>
+
+                                    <input
+                                        type="text"
+                                        className="rounded-lg border border-gray-300"
+                                        value={inputValue.note}
+                                        onChange={(e) =>
+                                            editData
+                                                ? setEditInputValues({
+                                                      ...editInputValues,
+                                                      [criteria.id]: {
+                                                          ...editInputValues[
+                                                              criteria.id
+                                                          ],
+                                                          note: e.target.value,
+                                                      },
+                                                  })
+                                                : setInputValues({
+                                                      ...inputValues,
+                                                      [criteria.id]: {
+                                                          ...inputValues[
+                                                              criteria.id
+                                                          ],
+                                                          note: e.target.value,
+                                                          criteria_id:
+                                                              criteria.id,
+                                                          participant_id:
+                                                              detailParticipant?.id,
+                                                      },
+                                                  })
+                                        }
+                                        placeholder="Catatan"
+                                    />
+                                </div>
                             </div>
                         );
                     })}

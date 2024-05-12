@@ -19,4 +19,14 @@ class Aspect extends Model
     {
         return $this->belongsTo(Problem::class);
     }
+
+    public function participantFactors()
+    {
+        return $this->hasMany(ParticipantFactor::class);
+    }
+
+    public function participantTotals()
+    {
+        return $this->hasMany(ParticipantTotal::class);
+    }
 }

@@ -20,6 +20,8 @@ return new class extends Migration
             $table->unsignedBigInteger('problem_id');
             $table->foreign('problem_id')->references('id')->on('problems')->cascadeOnDelete();
 
+            $table->float('final')->nullable();
+
             $table->timestamps();
         });
     }

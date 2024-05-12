@@ -52,22 +52,7 @@ class UserSeeder extends Seeder
                     'role_id' => 3,
                     'created_at' => now(),
                 ],
-                [
-                    'name' => 'Risky',
-                    'email' => 'risky@gmail.com',
-                    'password' => Hash::make('12345678'),
-                    'role_id' => 3,
-                    'created_at' => now(),
-                ],
-                [
-                    'name' => 'Dinda',
-                    'email' => 'dinda@gmail.com',
-                    'password' => Hash::make('12345678'),
-                    'role_id' => 3,
-                    'created_at' => now(),
-                ]
             ]
         );
-
     }
 }
