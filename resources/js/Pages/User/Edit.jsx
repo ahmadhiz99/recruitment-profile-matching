@@ -126,7 +126,7 @@ export default function Update({ auth }) {
                                 </button>
                                 <button
                                     onClick={(e) => update(e)}
-                                    className="bg-indigo-500 px-4 py-2 rounded-lg"
+                                    className="bg-teal-500 px-4 py-2 rounded-lg"
                                 >
                                     <p className="text-white text-sm">Simpan</p>
                                 </button>

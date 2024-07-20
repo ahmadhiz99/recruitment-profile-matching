@@ -27,22 +27,56 @@ export default function Navbar({ user }) {
                                 Dashboard
                             </NavLink>
                         </div>
-                        <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        {
+                            user.role_id == 3 ? 
+                            <>
+                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink
+                                    href={route("apply.appl_announcement")}
+                                    active={route().current("apply.appl_announcement")}
+                                >
+                                    Announcement
+                                </NavLink>
+                            </div>
+                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink
+                                    href={route("apply.appl_biodata")}
+                                    active={route().current("apply.appl_biodata")}
+                                >
+                                    Kelengkapan Data Diri
+                                </NavLink>
+                            </div>
+                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink
+                                    href={route("apply.appl_document")}
+                                    active={route().current("apply.appl_document")}
+                                >
+                                    Kelengkapan Dokumen
+                                </NavLink>
+                            </div>
+                            </>
+                            :
+                            <>
+                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                             <NavLink
                                 href={route("user.index")}
                                 active={route().current("user.index")}
                             >
                                 Pengguna
                             </NavLink>
-                        </div>
-                        <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                            <NavLink
-                                href={route("problem.index")}
-                                active={route().current("problem.index")}
-                            >
-                                Pekerjaan
-                            </NavLink>
-                        </div>
+                            </div>
+                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink
+                                    href={route("problem.index")}
+                                    active={route().current("problem.index")}
+                                >
+                                    Pekerjaan
+                                </NavLink>
+                            </div>
+                            </>
+
+                        }
+                        
                     </div>
 
                     <div className="hidden sm:flex sm:items-center sm:ms-6">

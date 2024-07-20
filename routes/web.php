@@ -11,6 +11,7 @@ use App\Http\Controllers\AspectsController;
 use App\Http\Controllers\CriteriasController;
 use App\Http\Controllers\DifferencesController;
 use App\Http\Controllers\ProfileMatchingController;
+use App\Http\Controllers\ApplicantController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,8 +24,17 @@ use App\Http\Controllers\ProfileMatchingController;
 |
 */
 
+// Route::get('/', function () {
+//     return Inertia::render('Welcome', [
+//         'canLogin' => Route::has('login'),
+//         'canRegister' => Route::has('register'),
+//         'laravelVersion' => Application::VERSION,
+//         'phpVersion' => PHP_VERSION,
+//     ]);
+// });
+
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
+    return Inertia::render('Auth/Login', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
@@ -32,13 +42,34 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return Inertia::render('Dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::group(['middleware' => 'auth','checkRole:client'], function() {
+    // CRUD PROFILE
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    // Route::get('/apply', [ApplicantController::class, 'index'])->name('apply.index');
+    Route::get('/appl_announcement', [UsersController::class, 'announcement'])->name('apply.appl_announcement');
+    Route::get('/appl_document', [UsersController::class, 'document'])->name('apply.appl_document');
+    Route::get('/appl_biodata', [UsersController::class, 'biodata'])->name('apply.appl_biodata');
+    Route::post('/user/update/document/{id}', [UsersController::class, 'update_document'])->name('user.update.document');
+    Route::post('/user/update/biodata/{id}', [UsersController::class, 'update_biodata'])->name('user.update.biodata');
+    Route::get('/user/get/document/{id}', [UsersController::class, 'get_document'])->name('user.get.document');
+    Route::get('/user/update/qualified/{id}/{id_participant}', [UsersController::class, 'update_qualified'])->name('user.update.qualified');
+    Route::get('/user/update/no_qualified/{id}/{id_participant}', [UsersController::class, 'update_no_qualified'])->name('user.update.no_qualified');
+    Route::get('/user/update/qualified_final/{id}/{id_participant}', [UsersController::class, 'update_qualified_final'])->name('user.update.qualified');
+    Route::get('/user/update/no_qualified_final/{id}/{id_participant}', [UsersController::class, 'update_no_qualified_final'])->name('user.update.no_qualified');
+
+
+});
+
+Route::group(['middleware' => 'auth','checkRole:super,admin'], function() {
     // CRUD USERS
+    Route::get('/dashboard', [UsersController::class, 'dashboard'])->name('dashboard');
     Route::get('/users', [UsersController::class, 'index'])->name('user.index');
     Route::get('/user/create', [UsersController::class, 'create'])->name('user.create');
     Route::post('/user/store', [UsersController::class, 'store'])->name('user.store');

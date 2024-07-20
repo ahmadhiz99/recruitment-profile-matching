@@ -131,7 +131,11 @@ class ProfileMatchingController extends Controller
             $sumByParticipant[$participant->id] = $sumTotal;
 
             $participantRank = Participant::find($participant->id);
-            $participantRank->final = $sumByParticipant[$participant->id];
+            if(request()->qualified_step == 1){
+                $participantRank->final_qualified = $sumByParticipant[$participant->id];
+            }else{
+                $participantRank->final = $sumByParticipant[$participant->id];
+            }
             $participantRank->save();
         }
     }
@@ -144,7 +148,9 @@ class ProfileMatchingController extends Controller
             $participantCriteria->participant_id = $criteriaData['participant_id'];
             $participantCriteria->criteria_id = $criteriaData['criteria_id'];
             $participantCriteria->value = $criteriaData['value'];
-            $participantCriteria->note = $criteriaData['note'];
+            if(isset($criteriaData['note'])){
+                $participantCriteria->note = $criteriaData['note'];
+            }
             $participantCriteria->save();
         }
         return redirect()->back();
@@ -153,13 +159,27 @@ class ProfileMatchingController extends Controller
     public function updateParticipantCriteria(Request $request)
     {
         foreach ($request->data as $aspectId => $criteriaData) {
-            // return $criteriaData['value'];
-            $participantCriteria = ParticipantCriteria::find($criteriaData['id']);
-            $participantCriteria->participant_id = $criteriaData['participant_id'];
-            $participantCriteria->criteria_id = $criteriaData['criteria_id'];
-            $participantCriteria->value = $criteriaData['value'];
-            $participantCriteria->note = $criteriaData['note'];
-            $participantCriteria->save();
+            if(isset($criteriaData['id'])){
+                 // return $criteriaData['value'];
+                $participantCriteria = ParticipantCriteria::find($criteriaData['id']);
+                $participantCriteria->participant_id = $criteriaData['participant_id'];
+                $participantCriteria->criteria_id = $criteriaData['criteria_id'];
+                $participantCriteria->value = $criteriaData['value'];
+                if(isset($criteriaData['note'])){
+                    $participantCriteria->note = $criteriaData['note'];
+                }
+                // $participantCriteria->note = $criteriaData['note'];
+                $participantCriteria->save();
+            }else{
+                $participantCriteria = new ParticipantCriteria();
+                $participantCriteria->participant_id = $criteriaData['participant_idx'];
+                $participantCriteria->criteria_id = $criteriaData['criteria_idx'];
+                $participantCriteria->value = $criteriaData['value'];
+                if(isset($criteriaData['note'])){
+                    $participantCriteria->note = $criteriaData['note'];
+                }
+                $participantCriteria->save();
+            }
         }
         return redirect()->back();
     }

@@ -1,13 +1,13 @@
 import React from "react";
 import { Head, Link, router, usePage } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
-export default function PageFinals({ participants, problem }) {
-    const sortParticipants = participants.sort((a, b) => b.final - a.final);
+export default function PageFinalsQualified({ participants, problem }) {
+    const sortParticipants = participants.sort((a, b) => b.final_qualified - a.final_qualified);
     return (
         <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg h-fit w-full">
             <div className="p-6 w-full">
                 <div className="flex flex-row justify-between items-center mb-5">
-                    <h1 className="font-bold text-xl">Ranking Peserta</h1>
+                    <h1 className="font-bold text-xl">Ranking Peserta Final</h1>
                 </div>
                 <table className="w-full">
                     <thead className="bg-gray-100 text-left">
@@ -30,7 +30,7 @@ export default function PageFinals({ participants, problem }) {
                                         {participant.user.email}
                                     </td>
                                     <td className="py-3 px-4 border-b-2 border-gray-50 text-sm">
-                                        {participant.final}
+                                        {participant.final_qualified}
                                     </td>
                                     <td className="py-3 px-4 border-b-2 border-gray-50 text-sm">
                                         {idx + 1}
@@ -38,19 +38,19 @@ export default function PageFinals({ participants, problem }) {
                                     <td className="py-3 px-4 border-b-2 border-gray-50 text-sm">
                                         <div className="flex items-center gap-0">
                                             
-                                            <PrimaryButton disabled={participant.user.qualified == 1 ? true:false} className="bg-teal-500 mx-1" >
+                                            <PrimaryButton disabled={participant.qualified_status == 3 ? true:false} className="bg-teal-500 mx-1" >
                                                 <Link
                                                     href={
-                                                       "/user/update/qualified/" + participant.user.id + "/" + participant.id
+                                                       "/user/update/qualified_final/" + participant.user.id + "/" + participant.id
                                                     }
                                                 >
                                                 <p className="font-weight-100">lolos</p>
                                             </Link>
                                             </PrimaryButton>
-                                            <PrimaryButton  disabled={participant.user.qualified == 2 ? true:false} className="bg-red-500 mx-1" >
+                                            <PrimaryButton  disabled={ participant.qualified_status == 4 ? true:false} className="bg-red-500 mx-1" >
                                                 <Link
                                                     href={
-                                                        "/user/update/no_qualified/" + participant.user.id + "/" + participant.id
+                                                        "/user/update/no_qualified_final/" + participant.user.id + "/" + participant.id
                                                     }
                                                 >
                                                 <p className="font-weight-100">Tidak Lolos</p>

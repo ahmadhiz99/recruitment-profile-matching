@@ -180,7 +180,7 @@ export default function PageDifferences({ differences, problem }) {
                                 Batal
                             </PrimaryButton>
                             <PrimaryButton
-                                className="bg-indigo-500"
+                                className="bg-teal-500"
                                 onClick={(e) =>
                                     difference
                                         ? putDifference(e)

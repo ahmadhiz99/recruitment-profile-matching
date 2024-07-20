@@ -2,7 +2,9 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import PageAspects from "@/Components/tab_pages/problem/PageAspects";
 import PageDifferences from "@/Components/tab_pages/problem/PageDifferences";
 import PageFinals from "@/Components/tab_pages/problem/PageFinals";
+import PageFinalsQualified from "@/Components/tab_pages/problem/PageFinalsQualified";
 import PageParticipants from "@/Components/tab_pages/problem/PageParticipants";
+import PageParticipantsQualified from "@/Components/tab_pages/problem/PageParticipantsQualified";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, usePage, router, Link } from "@inertiajs/react";
 import { useState } from "react";
@@ -21,9 +23,22 @@ export default function Edit({ auth }) {
     );
     const [page, setPage] = useState("edit");
 
+    console.log('[INFO]',data.problem_qualified);
+
     const filterParticipant = data.problem.participants.filter(
         (participant) => {
             return participant.final == null;
+        }
+    );
+    const filterParticipantQualified = data.problem_qualified.participants.filter(
+        (participant) => {
+            return participant.qualified_status == '1' || participant.qualified_status == '3'; // lolos seleksi berkas
+        }
+    );
+    const filterParticipantQualifiedFinal = data.problem_qualified.participants.filter(
+        (participant) => {
+            // return participant.qualified_status > 1; // lolos seleksi interview
+            return participant.final_qualified != null; // lolos seleksi interview
         }
     );
 
@@ -80,8 +95,8 @@ export default function Edit({ auth }) {
                             onClick={() => setPage("edit")}
                             className={`${
                                 page === "edit"
-                                    ? "bg-indigo-500 text-white"
-                                    : "bg-transparent text-indigo-500 border border-indigo-500"
+                                    ? "bg-teal-500 text-white"
+                                    : "bg-transparent text-teal-500 border border-teal-500"
                             } py-2 px-4 rounded`}
                         >
                             Edit
@@ -90,8 +105,8 @@ export default function Edit({ auth }) {
                             onClick={() => setPage("aspect")}
                             className={`${
                                 page === "aspect"
-                                    ? "bg-indigo-500 text-white"
-                                    : "bg-transparent text-indigo-500 border border-indigo-500"
+                                    ? "bg-teal-500 text-white"
+                                    : "bg-transparent text-teal-500 border border-teal-500"
                             } py-2 px-4 rounded`}
                         >
                             Aspek Nilai
@@ -100,32 +115,61 @@ export default function Edit({ auth }) {
                             onClick={() => setPage("selisih")}
                             className={`${
                                 page === "selisih"
-                                    ? "bg-indigo-500 text-white"
-                                    : "bg-transparent text-indigo-500 border border-indigo-500"
+                                    ? "bg-teal-500 text-white"
+                                    : "bg-transparent text-teal-500 border border-teal-500"
                             } py-2 px-4 rounded`}
                         >
                             Selisih Bobot
                         </button>
+
+                        <div>|</div>
+
                         <button
                             onClick={() => setPage("participant")}
                             className={`${
                                 page === "participant"
-                                    ? "bg-indigo-500 text-white"
-                                    : "bg-transparent text-indigo-500 border border-indigo-500"
+                                    ? "bg-teal-500 text-white"
+                                    : "bg-transparent text-teal-500 border border-teal-500"
                             } py-2 px-4 rounded`}
                         >
-                            Peserta
+                            Seleksi Berkas
                         </button>
                         {filterParticipant.length === 0 && (
                             <button
                                 onClick={() => setPage("result")}
                                 className={`${
                                     page === "result"
-                                        ? "bg-indigo-500 text-white"
-                                        : "bg-transparent text-indigo-500 border border-indigo-500"
+                                        ? "bg-teal-500 text-white"
+                                        : "bg-transparent text-teal-500 border border-teal-500"
                                 } py-2 px-4 rounded`}
                             >
-                                Hasil Akhir
+                                Hasil Seleksi Berkas
+                            </button>
+                        )}
+
+                        <div>|</div>
+                        {filterParticipantQualified.length > 0 && (
+                            <button
+                                onClick={() => setPage("participant_qualified")}
+                                className={`${
+                                    page === "participant_qualified"
+                                        ? "bg-teal-500 text-white"
+                                        : "bg-transparent text-teal-500 border border-teal-500"
+                                } py-2 px-4 rounded`}
+                            >
+                                Seleksi Interview
+                            </button>
+                        )}
+                        {filterParticipantQualifiedFinal.length > 0 && (
+                            <button
+                                onClick={() => setPage("result_qualified")}
+                                className={`${
+                                    page === "result_qualified"
+                                        ? "bg-teal-500 text-white"
+                                        : "bg-transparent text-teal-500 border border-teal-500"
+                                } py-2 px-4 rounded`}
+                            >
+                                Hasil Seleksi Interview
                             </button>
                         )}
                     </div>
@@ -237,7 +281,7 @@ export default function Edit({ auth }) {
                                     </button>
                                     <button
                                         onClick={(e) => update(e)}
-                                        className="bg-indigo-500 px-4 py-2 rounded-lg"
+                                        className="bg-teal-500 px-4 py-2 rounded-lg"
                                     >
                                         <p className="text-white text-sm">
                                             Simpan
@@ -269,6 +313,18 @@ export default function Edit({ auth }) {
                         <PageFinals
                             participants={data.problem.participants}
                             problem={data.problem}
+                        />
+                    )}
+                    {page === "participant_qualified" && (
+                        <PageParticipantsQualified
+                            participants={data.problem_qualified.participants.filter(participant=>participant.qualified_status == 1 || participant.qualified_status == 3)}
+                            problem={data.problem}
+                        />
+                    )}
+                    {page === "result_qualified" && (
+                        <PageFinalsQualified
+                        participants={data.problem_qualified.participants.filter(participant=>participant.qualified_status == 1 || participant.qualified_status == 3 && participant.qualified_status != null)}
+                        problem={data.problem}
                         />
                     )}
                 </div>

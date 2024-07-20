@@ -231,7 +231,7 @@ export default function PageParticipants({ participants, problem }) {
                             <i className="bx bx-fw bx-x"></i> Batal
                         </button>
                         <button
-                            className="bg-indigo-500 py-2 px-3 text-white rounded"
+                            className="bg-teal-500 py-2 px-3 text-white rounded"
                             onClick={() => submitData(inputValues)}
                         >
                             <i className="bx bx-fw bx-save"></i> Submit
@@ -270,7 +270,7 @@ export default function PageParticipants({ participants, problem }) {
                                 <i className="bx bx-fw bx-x"></i> Batal
                             </button>
                             <button
-                                className="bg-indigo-500 py-2 px-3 text-white rounded"
+                                className="bg-teal-500 py-2 px-3 text-white rounded"
                                 type="submit"
                             >
                                 <i className="bx bx-fw bx-save"></i> Submit

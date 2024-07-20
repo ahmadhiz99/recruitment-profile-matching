@@ -81,7 +81,7 @@ export default function Problems({ auth }) {
                                 <h1 className="font-bold text-xl">
                                     Total: {data.problems.total}
                                 </h1>
-                                <PrimaryButton className="bg-indigo-500">
+                                <PrimaryButton className="bg-teal-500">
                                     <Link href={route("problem.create")}>
                                         Tambah
                                     </Link>
@@ -154,7 +154,7 @@ export default function Problems({ auth }) {
                                                                         problem.id
                                                                     }
                                                                 >
-                                                                    <i className="bx bx-fw bx-info-circle text-indigo-500"></i>
+                                                                    <i className="bx bx-fw bx-info-circle text-teal-500"></i>
                                                                 </Link>
 
                                                                 <i

@@ -225,7 +225,7 @@ export default function PageAspects({ aspects, problem }) {
                                                       Batal
                                                   </PrimaryButton>
                                                   <PrimaryButton
-                                                      className="bg-indigo-500"
+                                                      className="bg-teal-500"
                                                       onClick={(e) =>
                                                           putAspect(e, asp)
                                                       }
@@ -272,7 +272,7 @@ export default function PageAspects({ aspects, problem }) {
                                                   onClick={() =>
                                                       formModal(true, asp)
                                                   }
-                                                  className="p-2 bg-indigo-500 text-sm rounded text-white"
+                                                  className="p-2 bg-teal-500 text-sm rounded text-white"
                                               >
                                                   <i className="bx bx-fw bx-plus"></i>{" "}
                                                   Kriteria
@@ -395,7 +395,7 @@ export default function PageAspects({ aspects, problem }) {
                                             ? putCriteria(e, criteria)
                                             : storeCriteria(e)
                                     }
-                                    className="bg-indigo-500"
+                                    className="bg-teal-500"
                                 >
                                     Simpan
                                 </PrimaryButton>
@@ -432,7 +432,7 @@ export default function PageAspects({ aspects, problem }) {
                                 </PrimaryButton>
                                 <PrimaryButton
                                     onClick={(e) => storeAspect(e)}
-                                    className="bg-indigo-500"
+                                    className="bg-teal-500"
                                 >
                                     Simpan
                                 </PrimaryButton>

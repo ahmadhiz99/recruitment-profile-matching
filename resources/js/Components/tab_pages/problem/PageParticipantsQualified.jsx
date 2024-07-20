@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
-export default function PageParticipants({ participants, problem }) {
+export default function PageParticipantsQualified({ participants, problem }) {
     const [modalAddValue, setModalAddValue] = useState(false);
     const [detailParticipant, setDetailParticipant] = useState(null);
     const [editData, setEditData] = useState(null);
@@ -19,6 +19,7 @@ export default function PageParticipants({ participants, problem }) {
     };
 
     const submitData = (data) => {
+        console.log('[INSERTSub]',data)
         router.visit(route("pm.store.participant.criterias"), {
             method: "post",
             data: {
@@ -34,6 +35,12 @@ export default function PageParticipants({ participants, problem }) {
     };
 
     const updateSubmitData = (data) => {
+        const criterias = problem.aspects.flatMap((aspect) => aspect.criterias)
+        for (let index = 1; index < data.length; index++) {
+            console.log('[EDITSubREV]',index)
+        }
+      
+
         router.visit(route("pm.update.participant.criteria"), {
             method: "put",
             data: {
@@ -54,11 +61,12 @@ export default function PageParticipants({ participants, problem }) {
             method: "get",
             data: {
                 problem_id: problem.id,
+                qualified_step: 1,
             },
             preserveState: true,
             preserveScroll: true,
             onSuccess: (page) => {
-                toast.success("Berhasil melakukan analisis!");
+                toast.success("Berhasil melakukan analisis qualified!");
                 reset();
             },
         });
@@ -89,12 +97,16 @@ export default function PageParticipants({ participants, problem }) {
             note: note,
         };
         setInputValues(updatedInputValues);
+        console.log('[NEWINPUT]',updatedInputValues);
     };
 
     useEffect(() => {
+        const criterias = problem.aspects.flatMap((aspect) => aspect.criterias)
+
+
         if (editData && detailParticipant?.participant_criterias) {
             const initialEditInputValues = {}; // Menggunakan objek
-            detailParticipant.participant_criterias.forEach((item) => {
+            detailParticipant.participant_criterias.forEach((item,idx) => {
                 initialEditInputValues[item.criteria_id] = {
                     id: item.id,
                     value: item.value,
@@ -104,10 +116,12 @@ export default function PageParticipants({ participants, problem }) {
                 };
             });
             setEditInputValues(initialEditInputValues);
+            console.log('[INPUTS]',initialEditInputValues)
+
         }
     }, [editData, detailParticipant?.participant_criterias]);
-
-    const criterias = problem.aspects.flatMap((aspect) => aspect.criterias).slice(0,5);
+    
+    const criterias = problem.aspects.flatMap((aspect) => aspect.criterias).slice(5)
 
     return (
         <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg h-fit w-full">
@@ -170,7 +184,7 @@ export default function PageParticipants({ participants, problem }) {
                                           </td>
                                           <td className="py-3 px-4 border-b-2 border-gray-50 text-sm">
                                               {participant.participant_criterias
-                                                  .length > 0 && (
+                                                  .length > 5 && (
                                                   <i className="bx bx-fw bx-check-circle text-emerald-500"></i>
                                               )}
                                           </td>
@@ -270,6 +284,7 @@ export default function PageParticipants({ participants, problem }) {
                                                               criteria.id
                                                           ],
                                                           value: e.target.value,
+                                                          criteria_idx: criteria.id,
                                                       },
                                                   })
                                                 : setInputValues({
@@ -314,6 +329,8 @@ export default function PageParticipants({ participants, problem }) {
                                                               criteria.id
                                                           ],
                                                           note: e.target.value,
+                                                          criteria_idx: criteria.id,
+                                                          participant_idx:detailParticipant?.id
                                                       },
                                                   })
                                                 : setInputValues({

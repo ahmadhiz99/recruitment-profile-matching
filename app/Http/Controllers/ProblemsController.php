@@ -49,8 +49,17 @@ class ProblemsController extends Controller
     public function edit($id)
     {
         $problem = Problem::with('aspects', 'differences', 'participants', 'participants.participantCriterias','participants.participantCriterias.criteria' )->find($id);
+        // $problem_qualified = Problem::with('aspects', 'differences', 'participants', 'participants.participantCriterias', 'participants.participantCriterias.criteria')
+        // ->whereHas('participants', function ($query) {
+        //     $query->whereNull('qualified_status');
+        // })
+        // ->find($id);
+        $problem_qualified = Problem::with('aspects', 'differences', 'participants', 'participants.participantCriterias','participants.participantCriterias.criteria' )->find($id);
+
+
         return Inertia::render('Problem/Edit', [
-            'problem' => $problem
+            'problem' => $problem,
+            'problem_qualified' => $problem_qualified
         ]);
     }
 

@@ -81,7 +81,7 @@ export default function Users({ auth }) {
                                 <h1 className="font-bold text-xl">
                                     Total: {data.users.total}
                                 </h1>
-                                <PrimaryButton className="bg-indigo-500">
+                                <PrimaryButton className="bg-teal-500">
                                     <Link href={route("user.create")}>
                                         Tambah
                                     </Link>
@@ -102,6 +102,9 @@ export default function Users({ auth }) {
 
                                         <th className="py-3 px-4 text-sm">
                                             Role
+                                        </th>
+                                        <th className="py-3 px-4 text-sm">
+                                            CV
                                         </th>
                                         <th className="py-3 px-4 w-10 text-sm">
                                             Aksi
@@ -128,6 +131,28 @@ export default function Users({ auth }) {
                                                     </td>
                                                     <td className="py-3 px-4 border-b-2 border-gray-50 text-sm">
                                                         {user.role.name}
+                                                    </td>
+                                                    <td className="py-3 px-4 border-b-2 border-gray-50 text-sm">
+                                                        {
+                                                            user.cv != null ?
+                                                            (
+                                                                <div>
+                                                                      <PrimaryButton className="bg-teal-500">
+                                                                        <a
+                                                                            target="_blank"
+                                                                            href={
+                                                                                "user/get/document/" +
+                                                                                user.id
+                                                                            }
+                                                                        >
+                                                                            CV Tersedia
+                                                                    </a>
+                                                                    </PrimaryButton>
+                                                                </div>
+                                                            )
+                                                            :
+                                                            'None'
+                                                        }
                                                     </td>
                                                     <td className="py-3 px-4 border-b-2 border-gray-50">
                                                         <div className="flex items-center gap-0">

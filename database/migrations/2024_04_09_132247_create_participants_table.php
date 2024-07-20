@@ -21,6 +21,8 @@ return new class extends Migration
             $table->foreign('problem_id')->references('id')->on('problems')->cascadeOnDelete();
 
             $table->float('final')->nullable();
+            $table->string('qualified_status')->nullable();
+            $table->float('final_qualified')->nullable();
 
             $table->timestamps();
         });
