@@ -58,7 +58,9 @@ Route::group(['middleware' => 'auth','checkRole:client'], function() {
     Route::get('/appl_biodata', [UsersController::class, 'biodata'])->name('apply.appl_biodata');
     Route::post('/user/update/document/{id}', [UsersController::class, 'update_document'])->name('user.update.document');
     Route::post('/user/update/biodata/{id}', [UsersController::class, 'update_biodata'])->name('user.update.biodata');
-    Route::get('/user/get/document/{id}', [UsersController::class, 'get_document'])->name('user.get.document');
+    Route::get('/user/get/document/cv/{id}', [UsersController::class, 'get_document_cv'])->name('user.get.document_cv');
+    Route::get('/user/get/document/ijazah/{id}', [UsersController::class, 'get_document_ijazah'])->name('user.get.document_ijazah');
+    Route::get('/user/get/document/portofolio/{id}', [UsersController::class, 'get_document_portofolio'])->name('user.get.document_portofolio');
     Route::get('/user/update/qualified/{id}/{id_participant}', [UsersController::class, 'update_qualified'])->name('user.update.qualified');
     Route::get('/user/update/no_qualified/{id}/{id_participant}', [UsersController::class, 'update_no_qualified'])->name('user.update.no_qualified');
     Route::get('/user/update/qualified_final/{id}/{id_participant}', [UsersController::class, 'update_qualified_final'])->name('user.update.qualified');

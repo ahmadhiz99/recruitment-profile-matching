@@ -7,8 +7,14 @@ import { toast } from "react-toastify";
 
 export default function PageParticipants({ participants, problem }) {
     const [modalAddValue, setModalAddValue] = useState(false);
+    const [modalDetail, setModalDetail] = useState(false);
     const [detailParticipant, setDetailParticipant] = useState(null);
     const [editData, setEditData] = useState(null);
+
+    const resetDetail = () => {
+        setModalDetail(false);
+        setDetailParticipant(null);
+    };
 
     const reset = () => {
         setModalAddValue(false);
@@ -120,14 +126,14 @@ export default function PageParticipants({ participants, problem }) {
                         Analisis
                     </PrimaryButton>
                 </div>
-                <table className="w-full">
-                    <thead className="bg-gray-100 text-left">
+                <table className="w-full text-center">
+                    <thead className="bg-gray-100 ">
                         <tr>
                             <th className="py-3 px-4 w-4 text-sm">No</th>
                             <th className="py-3 px-4 text-sm">Nama Peserta</th>
                             <th className="py-3 px-4 text-sm">Email</th>
                             {/* <th className="py-3 px-4 text-sm">Kelompok</th> */}
-                            <th className="py-3 px-4 text-sm">CV</th>
+                            <th className="py-3 px-4 text-sm">Berkas</th>
                             <th className="py-3 px-4 text-sm">Status</th>
                             <th className="py-3 px-4 w-10 text-sm">Aksi</th>
                         </tr>
@@ -146,7 +152,7 @@ export default function PageParticipants({ participants, problem }) {
                                           <td className="py-3 px-4 border-b-2 border-gray-50 text-sm">
                                               {participant.user.email}
                                           </td>
-                                          <td className="py-3 px-4 border-b-2 border-gray-50 text-sm">
+                                          <td className="py-3 px-4 border-b-2 border-gray-50 text-sm flex gap-1">
                                                 {
                                                     participant.user.cv != null ?
                                                     (
@@ -155,17 +161,75 @@ export default function PageParticipants({ participants, problem }) {
                                                                 <a
                                                                     target="_blank"
                                                                     href={
-                                                                        "/user/get/document/" +
+                                                                        "/user/get/document/cv/" +
                                                                          participant.user.id
                                                                     }
                                                                 >
-                                                                    CV Tersedia
+                                                                    CV
                                                             </a>
                                                             </PrimaryButton>
                                                         </div>
                                                     )
                                                     :
-                                                    'None'
+                                                    (
+                                                        <div>
+                                                            <PrimaryButton className="bg-teal-500" disabled={true}>
+                                                                    CV
+                                                            </PrimaryButton>
+                                                        </div>
+                                                    )
+                                                }
+                                                 {
+                                                    participant.user.ijazah != null ?
+                                                    (
+                                                        <div>
+                                                                <PrimaryButton className="bg-teal-500">
+                                                                <a
+                                                                    target="_blank"
+                                                                    href={
+                                                                        "/user/get/document/ijazah/" +
+                                                                         participant.user.id
+                                                                    }
+                                                                >
+                                                                    Ijazah
+                                                            </a>
+                                                            </PrimaryButton>
+                                                        </div>
+                                                    )
+                                                    :
+                                                    (
+                                                        <div>
+                                                            <PrimaryButton className="bg-teal-500" disabled={true}>
+                                                                    Ijazah
+                                                            </PrimaryButton>
+                                                        </div>
+                                                    )
+                                                }
+                                                 {
+                                                    participant.user.portofolio != null ?
+                                                    (
+                                                        <div>
+                                                                <PrimaryButton className="bg-teal-500">
+                                                                <a
+                                                                    target="_blank"
+                                                                    href={
+                                                                        "/user/get/document/portofolio/" +
+                                                                         participant.user.id
+                                                                    }
+                                                                >
+                                                                    Portofolio
+                                                            </a>
+                                                            </PrimaryButton>
+                                                        </div>
+                                                    )
+                                                    :
+                                                    (
+                                                        <div>
+                                                            <PrimaryButton className="bg-teal-500" disabled={true}>
+                                                                Portofolio
+                                                            </PrimaryButton>
+                                                        </div>
+                                                    )
                                                 }
                                           </td>
                                           <td className="py-3 px-4 border-b-2 border-gray-50 text-sm">
@@ -174,8 +238,20 @@ export default function PageParticipants({ participants, problem }) {
                                                   <i className="bx bx-fw bx-check-circle text-emerald-500"></i>
                                               )}
                                           </td>
-                                          <td className="py-3 px-4 border-b-2 border-gray-50 w-52">
+                                          <td className="py-3 px-4 border-b-2 border-gray-50 w-80">
                                               <div className="flex items-center gap-2 w-full">
+                                                    <button className="bg-yellow-500 py-2 px-3 rounded text-sm w-fit text-white"
+                                                            onClick={()=>{
+                                                                setModalDetail(
+                                                                    true
+                                                                );
+                                                                setDetailParticipant(
+                                                                    participant
+                                                                );
+                                                            }}
+                                                        >
+                                                            Detail
+                                                    </button>
                                                   {participant
                                                       .participant_criterias
                                                       .length > 0 ? (
@@ -229,6 +305,77 @@ export default function PageParticipants({ participants, problem }) {
                     </tbody>
                 </table>
             </div>
+            
+            <Modal show={modalDetail} onClose={() => resetDetail()}>
+    <div className="p-12">
+        <div style={{ maxHeight: "46rem", overflowY: "auto" }}>
+            <p className="text-xl font-bold">Detail - {detailParticipant?.user.name}</p>
+
+            <p><strong>Full Name:</strong></p>
+            <p>{detailParticipant?.user.fullname}</p>
+
+            <p><strong>Email:</strong></p>
+            <p>{detailParticipant?.user.email}</p>
+
+            <p><strong>Address:</strong></p>
+            <p>{detailParticipant?.user.address}</p>
+
+            <p><strong>WhatsApp:</strong></p>
+            <p>{detailParticipant?.user.whatsapp}</p>
+
+
+            {detailParticipant?.user?.cv && (
+                <>
+                    <p><strong>CV:</strong></p>
+                    <p>
+                        <a 
+                            href={`/user/get/document/cv/${detailParticipant.user.id}`} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                        >
+                            View CV
+                        </a>
+                    </p>
+                </>
+            )}
+
+            {detailParticipant?.user?.ijazah && (
+                <>
+                    <p><strong>Ijazah:</strong></p>
+                    <p>
+                        <a 
+                            href={`/user/get/document/ijazah/${detailParticipant.user.id}`} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                        >
+                            View Ijazah
+                        </a>
+                    </p>
+                </>
+            )}
+
+            {detailParticipant?.user?.portofolio && (
+                <>
+                    <p><strong>Portofolio:</strong></p>
+                    <p>
+                        <a 
+                            href={`/user/get/document/portofolio/${detailParticipant.user.id}`} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                        >
+                            View Portofolio
+                        </a>
+                    </p>
+                </>
+            )}
+
+        </div>
+    </div>
+</Modal>
+
+
+
+
             <Modal show={modalAddValue} onClose={() => reset()}>
                 <div
                     className="p-12 overflow-y-auto"

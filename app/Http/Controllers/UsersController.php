@@ -188,16 +188,36 @@ class UsersController extends Controller
         $user = User::find($id);
         $request->fullname ? $user->fullname = $request->fullname : null;
         $request->nickname ? $user->nickname = $request->nickname : null;
-        $request->phone ? $user->phone    = $request->phone : null;
+        $request->address ? $user->address    = $request->address : null;
         $request->whatsapp ? $user->whatsapp = $request->whatsapp : null;
         $user->save();
         return redirect()->route('apply.appl_biodata');
     }
 
-    public function get_document($id)
+    public function get_document_cv($id)
     {
         $user = User::find($id);
         $filePath = $user->cv;
+        if (Storage::exists($filePath)) {
+            return Storage::download($filePath);
+        } else {
+            abort(404, 'File not found');
+        }
+    }
+    public function get_document_ijazah($id)
+    {
+        $user = User::find($id);
+        $filePath = $user->ijazah;
+        if (Storage::exists($filePath)) {
+            return Storage::download($filePath);
+        } else {
+            abort(404, 'File not found');
+        }
+    }
+    public function get_document_portofolio($id)
+    {
+        $user = User::find($id);
+        $filePath = $user->portofolio;
         if (Storage::exists($filePath)) {
             return Storage::download($filePath);
         } else {

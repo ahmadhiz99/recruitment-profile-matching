@@ -11,7 +11,7 @@ export default function ApplicantBiodata({ auth }) {
         fullname:dataCurr.fullname?dataCurr.fullname:null,
         nickname:dataCurr.nickname?dataCurr.nickname:null,
         email:dataCurr.email?dataCurr.email:null,
-        phone:dataCurr.phone?dataCurr.phone:null,
+        address:dataCurr.address?dataCurr.address:null,
         whatsapp:dataCurr.whatsapp?dataCurr.whatsapp:null,
       })
       
@@ -78,15 +78,15 @@ export default function ApplicantBiodata({ auth }) {
 
                                     <div className="flex flex-col gap-2 my-5">
                                         <label className="text-sm font-bold">
-                                          No Hp
+                                          Alamat
                                         </label>
-                                        <input
-                                             value={data.phone}
+                                        <textarea
+                                             value={data.address}
                                             type='number'
-                                            onChange={e => setData('phone', e.target.value)} 
+                                            onChange={e => setData('address', e.target.value)} 
                                             className="rounded-lg border border-gray-300"
                                         >
-                                        </input>
+                                        </textarea>
                                     </div>
 
                                     <div className="flex flex-col gap-2 my-5">

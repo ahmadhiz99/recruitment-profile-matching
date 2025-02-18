@@ -19,11 +19,12 @@ return new class extends Migration
             $table->string('fullname')->nullable();
             $table->string('nickname')->nullable();
             $table->string('phone')->nullable();
+            $table->string('address')->nullable();
             $table->string('whatsapp')->nullable();
             $table->text('cv')->nullable();
             $table->text('ijazah')->nullable();
             $table->text('portofolio')->nullable();
-            $table->int('qualified')->default('0');
+            $table->integer('qualified')->default('0');
             $table->string('password');
             $table->rememberToken();
 
